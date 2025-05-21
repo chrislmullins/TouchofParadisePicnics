@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Touch of Paradise Picnics</title>
+  <meta name="theme-color" content="#007aff">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; color: #333; padding-bottom: 60px; }
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* Hero */
+    #home {
+      background: url('assets/twoplatesdusk800x600.jpg') center/cover no-repeat;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; color: #fff; position: relative;
+    }
+    #home h1 { font-size: 2.5rem; margin-bottom: 1rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    #home p { font-size: 1.25rem; max-width: 800px; background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+    #home .insta-link { display: inline-flex; align-items: center; color: #fff; text-decoration: none; background: rgba(0,0,0,0.4); padding: 0.5rem 1rem; border-radius: 4px; font-size: 1rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+    #home .insta-link img { width: 24px; height: 24px; margin-right: 0.5rem; }
+
+    #installBtn {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      background: #007aff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: none;
+    }
+    #installBtn:hover {
+      background: #005fcc;
+    }
+
+    .container { width: 90%; max-width: 800px; margin: 2rem auto; }
+    .carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .card { flex: 0 0 100%; scroll-snap-align: start; padding: 1rem; text-align: center; }
+    .card img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem; }
+    form input, form select { width: 100%; padding: .5rem; margin: .5rem 0; }
+    .btn { display: inline-block; padding: .75rem 1.5rem; border: 1px solid #007aff; border-radius: 4px; color: #007aff; background: none; text-decoration: none; cursor: pointer; transition: background .3s, color .3s; }
+    .btn:hover { background: #007aff; color: #fff; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: .5rem 0; z-index: 100; }
+    .bottom-nav button { background: none; border: none; font-size: 1rem; color: #333; cursor: pointer; }
+    .bottom-nav button.active { color: #007aff; }
+  </style>
+</head>
+<body>
+  <!-- Home View -->
+  <div id="home" class="view active">
+    <button id="installBtn">Install App</button>
+    <div>
+      <h1>Touch of Paradise Picnics</h1>
+      <p>Step into a world of magic and ambiance with a curated setup that goes beyond a picnic—it’s a personalized touch of paradise. Enjoy cozy seating, styled tablescape, ambient music, and a vibe infused with aloha.</p>
+      <a href="https://instagram.com/touchofparadisepicnics" target="_blank" class="insta-link">
+        <img src="assets/instagram-icon.png" alt="Instagram Icon">@touchofparadisepicnics
+      </a>
+    </div>
+  </div>
+
+  <!-- About View -->
+  <div id="about" class="view">
+    <div class="container">
+      <h2>About Us</h2>
+      <p>Step into a world of magic and ambiance with a curated setup that goes beyond a picnic—it’s a personalized touch of paradise. Enjoy cozy seating, styled tablescape, ambient music, and a vibe infused with aloha.</p>
+    </div>
+  </div>
+
+  <!-- Packages View -->
+  <div id="packages" class="view">
+    <div class="container">
+      <h2>Our Packages</h2>
+      <div class="carousel">
+        <!-- Cards for packages go here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking View -->
+  <div id="booking" class="view">
+    <div class="container">
+      <h2>Book Your Picnic</h2>
+      <form>
+        <label>Name<br><input type="text" name="name" required></label>
+        <label>Email<br><input type="email" name="email" required></label>
+        <label>Date & Time<br><input type="datetime-local" name="datetime" required></label>
+        <label>Package<br>
+          <select name="package">
+            <option>Pilina Picnic</option>
+            <option>Aloha Mālama</option>
+            <option>Aloha Hoʻohiki</option>
+            <option>Custom Event (+$35/person)</option>
+          </select>
+        </label>
+        <button type="submit" class="btn">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="active" data-view="home">Home</button>
+    <button data-view="about">About</button>
+    <button data-view="packages">Packages</button>
+    <button data-view="booking">Book</button>
+  </nav>
+
+  <script>
+    // PWA install prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      console.log('beforeinstallprompt fired');
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installBtn').style.display = 'block';
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      document.getElementById('installBtn').style.display = 'none';
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('User response to install prompt:', outcome);
+        deferredPrompt = null;
+      }
+    });
+
+    // View switching
+    const views = document.querySelectorAll('.view');
+    document.querySelectorAll('.bottom-nav button[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        views.forEach(v => v.classList.remove('active'));
+        document.getElementById(btn.dataset.view).classList.add('active');
+        document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('Service worker registered'))
+          .catch(err => console.error('SW registration failed', err));
+      });
+    }
+  </script>
+</body>
+</html>

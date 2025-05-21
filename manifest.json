@@ -1,0 +1,39 @@
+{
+  "id": "/",
+  "name": "Touch of Paradise Picnics",
+  "short_name": "ParadisePicnic",
+  "description": "Elevated, curated picnic experiences infused with aloha ambiance",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007aff",
+"icons": [
+  {
+    "src": "icons/icon-192.png",
+    "sizes": "192x192",
+    "type": "image/png",
+    "purpose": "any"
+  },
+  {
+    "src": "icons/icon-512.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable"
+  }
+],
+"screenshots": [
+  {
+    "src": "assets/screenshot-wide.png",
+    "sizes": "800x600",
+    "type": "image/png",
+    "form_factor": "wide"
+  },
+  {
+    "src": "assets/screenshot-tall.png",
+    "sizes": "600x800",
+    "type": "image/png"
+    
+  }
+]
+
+}
