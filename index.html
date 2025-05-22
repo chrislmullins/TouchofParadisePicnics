@@ -13,6 +13,43 @@
     .view { display: none; }
     .view.active { display: block; }
 
+.ios-modal.hidden {
+  display: none;
+}
+.ios-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.ios-modal-content {
+  background: #fff;
+  padding: 1.5em;
+  border-radius: 12px;
+  max-width: 90%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.ios-modal-content .share-icon img {
+  height: 1.2em;
+  vertical-align: middle;
+}
+
+.ios-modal-content button {
+  margin-top: 1em;
+  padding: 0.5em 1.2em;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+}
     /* Hero */
     #home {
       background: url('assets/twoplatesdusk800x600.jpg') center/cover no-repeat;
@@ -190,7 +227,16 @@
     <button data-view="packages">Packages</button>
     <button data-view="booking">Book</button>
   </nav>
-
+<div id="iosInstallModal" class="ios-modal hidden">
+  <div class="ios-modal-content">
+    <p>Install this app on your iPhone:</p>
+    <ol>
+      <li>Tap <span class="share-icon"><img src="assets/share-icon.png" alt="Share"></span></li>
+      <li>Then tap <strong>“Add to Home Screen”</strong></li>
+    </ol>
+    <button id="iosModalClose">Got it</button>
+  </div>
+</div>
   <script>
     // PWA install prompt
     let deferredPrompt;
