@@ -277,5 +277,29 @@
       });
     }
   </script>
+
+<script>
+  function isIos() {
+    return /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+  }
+
+  function isInStandaloneMode() {
+    return 'standalone' in window.navigator && window.navigator.standalone;
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('iosInstallModal');
+    const closeBtn = document.getElementById('iosModalClose');
+
+    if (isIos() && !isInStandaloneMode()) {
+      // Delay so user sees it after engaging
+      setTimeout(() => modal.classList.remove('hidden'), 3000);
+    }
+
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  });
+</script>
 </body>
 </html>
