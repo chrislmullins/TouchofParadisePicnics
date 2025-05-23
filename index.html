@@ -212,26 +212,70 @@
 </div>
 
 
-  <!-- Booking View -->
-  <div id="booking" class="view">
-    <div class="container">
-      <h2>Book Your Picnic</h2>
-      <form>
-        <label>Name<br><input type="text" name="name" required></label>
-        <label>Email<br><input type="email" name="email" required></label>
-        <label>Date & Time<br><input type="datetime-local" name="datetime" required></label>
-        <label>Package<br>
-          <select name="package">
-            <option>Pilina Picnic</option>
-            <option>Aloha Mālama</option>
-            <option>Aloha Hoʻohiki</option>
-            <option>Custom Event (+$35/person)</option>
-          </select>
-        </label>
-        <button type="submit" class="btn">Submit</button>
-      </form>
+ <!-- Booking View -->
+<div id="booking" class="view">
+  <div class="container">
+    <h2>Book Your Picnic</h2>
+    <form id="bookingForm" action="https://formspree.io/f/mpwdeojd" method="POST" onsubmit="return validateBookingForm(event)">
+      <label>Name<br><input type="text" name="name" required></label>
+      <label>Email<br><input type="email" name="_replyto" required></label>
+      <label>Date & Time<br><input type="datetime-local" name="datetime" required></label>
+      <label>Package<br>
+        <select name="package">
+          <option>Pilina Picnic</option>
+          <option>Aloha Mālama</option>
+          <option>Aloha Hoʻohiki</option>
+          <option>Custom Event (+$35/person)</option>
+        </select>
+      </label>
+      
+      <!-- Simple Anti-bot Math -->
+      <label>What is 3 + 4?<br>
+        <input type="text" id="botcheck" placeholder="Your Answer" required>
+      </label>
+
+      <button type="submit" class="btn">Submit</button>
+    </form>
+
+    <!-- Confirmation Popup -->
+    <div id="confirmationMessage" style="display: none; margin-top: 1rem; color: green;">
+      Your picnic request has been sent! We’ll get back to you shortly.
     </div>
   </div>
+</div>
+
+<script>
+  function validateBookingForm(event) {
+    event.preventDefault();
+
+    const botAnswer = document.getElementById("botcheck").value.trim();
+    if (botAnswer !== "7") {
+      alert("Please answer the anti-spam question correctly.");
+      return false;
+    }
+
+    const form = document.getElementById("bookingForm");
+
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        document.getElementById("confirmationMessage").style.display = "block";
+        form.reset();
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    }).catch(error => {
+      alert("Error sending form.");
+      console.error(error);
+    });
+
+    return false;
+  }
+</script>
+
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
