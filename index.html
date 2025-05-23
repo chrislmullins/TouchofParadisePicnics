@@ -272,14 +272,21 @@
 
     // View switching
     const views = document.querySelectorAll('.view');
-    document.querySelectorAll('.bottom-nav button[data-view]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        views.forEach(v => v.classList.remove('active'));
-        document.getElementById(btn.dataset.view).classList.add('active');
-        document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
+document.querySelectorAll('.bottom-nav button[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    views.forEach(v => v.classList.remove('active'));
+    const target = document.getElementById(btn.dataset.view);
+    target.classList.add('active');
+
+    // Scroll to top of the activated section
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Update active button style
+    document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
 
     // Register service worker
     if ('serviceWorker' in navigator) {
