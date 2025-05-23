@@ -92,6 +92,14 @@
     .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: .5rem 0; z-index: 100; }
     .bottom-nav button { background: none; border: none; font-size: 1rem; color: #333; cursor: pointer; }
     .bottom-nav button.active { color: #007aff; }
+
+/* Adjust scroll position for anchored sections */
+#home,
+#packages,
+#booking,
+#about {
+  scroll-margin-top: 80px; /* Change 80px to match your fixed header height */
+}
   </style>
 </head>
 <body>
